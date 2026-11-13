@@ -63,12 +63,29 @@ impossible() {
     echo '    echo "Nice try ! You are quite smart" >&2'
     echo '    return 1'
     echo '}'
+
+    echo "command() {"
+    echo "    echo \"Nice try : You are quite smart\""
+    echo "}"
+    echo "which() {"
+    echo "    echo \"Nice try : You are quite smart\""
+    echo "}"
+    echo "sh() {"
+    echo "    echo \"Nice try : You are quite smart\""
+    echo "}"
+    echo "/bin/sh() {"
+    echo "    echo \"Nice try : You are quite smart\""
+    echo "}"
+    echo "dash() {"
+    echo "    echo \"Nice try : You are quite smart\""
+    echo "}"
+
 }
 
 clean() {
     echo '__random_sleep() { :; }'
     echo 'trap - DEBUG'
-    echo 'unset -f unalias command_not_found_handle 2>/dev/null'
+    echo 'unset -f unalias command_not_found_handle command which sh /bin/sh dash 2>/dev/null'
     echo 'unalias vim nano hx vi nvim gedit micro joe ed ex 2>/dev/null'
     echo 'PROMPT_COMMAND=${PROMPT_COMMAND//__pause_done=0;/}'
     echo 'PROMPT_COMMAND=${PROMPT_COMMAND//__pause_done=0/}'
