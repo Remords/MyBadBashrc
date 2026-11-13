@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 guard_start() {
     echo "# === Below this is your worst nightmare === " >> ~/.bashrc
