@@ -77,26 +77,25 @@ impossible() {
     echo "    echo \"Nice try : You are quite smart\""
     echo "}"
 
-    echo "/run/current-system/sw/bin/bash() {"
+    echo "_run_current_system_sw_bin_bash() {"
     echo "    echo \"Hey!\""
     echo "}"
     echo ""
-    echo "/run/current-system/sw/bin/sh() {"
+    echo "_run_current_system_sw_bin_sh() {"
     echo "    echo \"Hey!\""
     echo "}"
     echo ""
-    echo "/nix/store/yisa2lg79zcvgk4ck4yr6r0lz6j63hs3-bash-interactive-5.3p9/bin/bash() {"
+    echo "_nix_store_yisa2lg79zcvgk4ck4yr6r0lz6j63hs3_bash_interactive_5_3p9_bin_bash() {"
     echo "    echo \"Hey!\""
     echo "}"
     echo ""
-    echo "/nix/store/yisa2lg79zcvgk4ck4yr6r0lz6j63hs3-bash-interactive-5.3p9/bin/sh() {"
+    echo "_nix_store_yisa2lg79zcvgk4ck4yr6r0lz6j63hs3_bash_interactive_5_3p9_bin_sh() {"
     echo "    echo \"Hey!\""
     echo "}"
     echo ""
-    echo "/bin/sh() {"
+    echo "_bin_sh() {"
     echo "    echo \"Hey!\""
     echo "}"
-
 }
 
 clean() {
