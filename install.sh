@@ -39,7 +39,7 @@ hard() {
     echo '  [[ "$BASH_COMMAND" == __* ]] && return'
     echo '  if [[ $__pause_done -eq 0 ]]; then'
     echo '    __pause_done=1'
-    echo '    sleep "$(awk '\''BEGIN{srand(); printf "%.2f", 0.8 + rand()}'\'')"'
+    echo '    sleep "$(awk '\''BEGIN{srand(); printf "%.2f", 1.1 + rand()}'\'')"'
     echo '  fi'
     echo '}'
     echo 'trap '\''__random_sleep'\'' DEBUG'
@@ -77,7 +77,6 @@ clean() {
 
 purge() {
     sed -i '/# === Below this is your worst nightmare ===/,/# === This is the end your nightmare ===/d' ~/.bashrc 2>/dev/null
-    # rm install.sh
 }
 
 case "$1" in
