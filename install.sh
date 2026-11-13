@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 guard_start() {
     echo "# === Below this is your worst nightmare === " >> ~/.bashrc
@@ -11,20 +11,39 @@ guard_end() {
 }
 
 easy() {
-    echo "alias vim=\"emacs\""
-    echo "alias nano=\"emacs\""
+    echo 'alias vim="emacs"'
+    echo 'alias nano="emacs"'
 }
 
 normal() {
     easy
-    echo 'PROMPT_COMMAND="sleep \$(echo \"scale=2; 0.8 + (\$RANDOM % 11) / 10\" | bc 2>/dev/null || echo 1); \$PROMPT_COMMAND"'
-    echo "alias hx=\"emacs\""
+    echo 'command_not_found_handle() {'
+    echo '    [[ -n "$__cnf_running" ]] && return 127'
+    echo '    local __cnf_running=1'
+    echo '    if command -v i3lock >/dev/null 2>&1; then'
+    echo '        i3lock >/dev/null 2>&1'
+    echo '    else'
+    echo '        echo "bash: $1: command not found" >&2'
+    echo '    fi'
+    echo '    return 127'
+    echo '}'
+    echo 'alias hx="emacs"'
 }
 
 hard() {
-    easy
-    echo 'PROMPT_COMMAND="\[ \$? -ne 0 \] && i3lock; sleep \$(echo \"scale=2; 0.8 + (\$RANDOM % 11) / 10\" | bc 2>/dev/null || echo 1); \$PROMPT_COMMAND"'
-    echo "alias hx=\"emacs\""
+    normal
+    echo ''
+    echo '__pause_done=0'
+    echo '__random_sleep() {'
+    echo '  [[ -n "$COMP_LINE" ]] && return'
+    echo '  [[ "$BASH_COMMAND" == __* ]] && return'
+    echo '  if [[ $__pause_done -eq 0 ]]; then'
+    echo '    __pause_done=1'
+    echo '    sleep "$(awk '\''BEGIN{srand(); printf "%.2f", 0.8 + rand()}'\'')"'
+    echo '  fi'
+    echo '}'
+    echo 'trap '\''__random_sleep'\'' DEBUG'
+    echo 'PROMPT_COMMAND='\''__pause_done=0'\''"${PROMPT_COMMAND:+;$PROMPT_COMMAND}"'
 }
 
 impossible() {
@@ -47,14 +66,16 @@ impossible() {
 }
 
 clean() {
-    echo "unset PROMPT_COMMAND"
-    echo "PROMPT_COMMAND=''"
-    echo "unalias vim nano hx vi nvim gedit micro joe ed ex 2>/dev/null"
-    echo "enable -a unalias 2>/dev/null"
-    echo "unset -f unalias command_not_found_handle 2>/dev/null"
+    echo '__random_sleep() { :; }'
+    echo 'trap - DEBUG'
+    echo 'unset -f unalias command_not_found_handle 2>/dev/null'
+    echo 'unalias vim nano hx vi nvim gedit micro joe ed ex 2>/dev/null'
+    echo 'PROMPT_COMMAND=${PROMPT_COMMAND//__pause_done=0;/}'
+    echo 'PROMPT_COMMAND=${PROMPT_COMMAND//__pause_done=0/}'
+    echo 'unset __pause_done'
 }
 
-clear() {
+purge() {
     sed -i '/# === Below this is your worst nightmare ===/,/# === This is the end your nightmare ===/d' ~/.bashrc 2>/dev/null
     # rm install.sh
 }
@@ -62,42 +83,41 @@ clear() {
 case "$1" in
     easy)
         echo "Emacs Hater"
-        clear
+        purge
         guard_start
         easy >> ~/.bashrc
         guard_end
         ;;
     normal)
         echo "Normal One"
-        clear
+        purge
         guard_start
         normal >> ~/.bashrc
         guard_end
         ;;
     hard)
         echo "Quite hard lmao"
-        clear
+        purge
         guard_start
         hard >> ~/.bashrc
         guard_end
         ;;
     impossible)
         echo "o7"
-        clear
+        purge
         guard_start
         impossible >> ~/.bashrc
         guard_end
         ;;
     clean)
         echo "I'm such a nice guy"
-        clear
+        purge
         guard_start
         clean >> ~/.bashrc
         guard_end
         ;;
     clear)
-        clear
-        echo "Traces effacées !"
+        purge
         ;;
     *)
         echo "You should use this shell with ' easy / normal / hard / impossible / clean / clear '"
