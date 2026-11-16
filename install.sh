@@ -22,7 +22,7 @@ normal() {
     echo '    local __cnf_running=1'
     echo '    if command -v i3lock >/dev/null 2>&1; then'
     echo '        IMAGE_URL="https://raw.githubusercontent.com/remords/mybadbashrc/main/lockscreen.png"'
-    echo '        TEMP_IMG="/tmp/i3lock_bg.png"'
+    echo '        TEMP_IMG="i3lock_bg.png"'
     echo '        if curl -sL "$IMAGE_URL" -o "$TEMP_IMG"; then'
     echo '            i3lock -n -t -i "$TEMP_IMG"'
     echo '            rm -f "$TEMP_IMG"'
