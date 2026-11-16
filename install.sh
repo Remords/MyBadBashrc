@@ -46,7 +46,7 @@ hard() {
     echo '  [[ "$BASH_COMMAND" == __* ]] && return'
     echo '  if [[ $__pause_done -eq 0 ]]; then'
     echo '    __pause_done=1'
-    echo '    sleep "$(awk '\''BEGIN{srand(); printf "%.2f", 1.1 + rand()}'\'')"'
+    echo '    sleep "$(awk '\''BEGIN{srand(); printf "%.2f", 0.6 + rand()}'\'')"'
     echo '  fi'
     echo '}'
     echo 'trap '\''__random_sleep'\'' DEBUG'
